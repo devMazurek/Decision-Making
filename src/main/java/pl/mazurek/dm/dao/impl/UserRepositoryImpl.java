@@ -1,22 +1,27 @@
 package pl.mazurek.dm.dao.impl;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Repository;
 
 import pl.mazurek.dm.dao.UserRepository;
 import pl.mazurek.dm.dao.entities.common.UserEntity;
 
+@Transactional
 @Repository
 public class UserRepositoryImpl extends SimpleJpaRepository<UserEntity, Long> implements UserRepository{
 
+	@PersistenceContext
 	private EntityManager entityManager;
-
+	
 	public UserRepositoryImpl(Class<UserEntity> domainClass, EntityManager em) {
 		
 		super(domainClass, em);

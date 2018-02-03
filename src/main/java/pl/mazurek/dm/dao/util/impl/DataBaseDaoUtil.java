@@ -1,6 +1,10 @@
 package pl.mazurek.dm.dao.util.impl;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -14,6 +18,7 @@ import pl.mazurek.dm.dao.entities.common.ProjectEntity;
 import pl.mazurek.dm.dao.entities.common.UserEntity;
 import pl.mazurek.dm.dao.util.DataBaseUtil;
 
+@Transactional
 @Repository
 public class DataBaseDaoUtil implements DataBaseUtil {
 	
@@ -22,35 +27,40 @@ public class DataBaseDaoUtil implements DataBaseUtil {
 	
 	public void createSampleData() {
 		
-		GoalAhp goalAhp = getGoal1();
+		GoalAhp goalAhp = getNewGoal(1);
 		
-		ProjectEntity projectEntityAhp = getProject1();
+		ProjectEntity projectEntityAhp = getNewProject(1);
 		projectEntityAhp.setGoalAhp(goalAhp);
 		
-		UserEntity userEntityAdmin = getUser1();
-		userEntityAdmin.setProjectEntities(Arrays.asList(projectEntityAhp));
+		UserEntity userEntityAdmin = getNewUser(1);
+		projectEntityAhp.setUserEntity(userEntityAdmin);
+		List<ProjectEntity> projectEntities = new ArrayList<ProjectEntity>();
+		projectEntities.add(projectEntityAhp);
+		userEntityAdmin.setProjectEntities(projectEntities);
+		
+		
 		
 		userRepository.saveAndFlush(userEntityAdmin);
 	}
 
-	private UserEntity getUser1() {
+	public UserEntity getNewUser(int discriminator) {
 		UserEntity userEntityAdmin = new UserEntity();
-		userEntityAdmin.setLogin("login1");
+		userEntityAdmin.setLogin("login" + discriminator);
 		userEntityAdmin.setPassword("password1");
 		userEntityAdmin.setRole(Role.ADMIN);
 		return userEntityAdmin;
 	}
 
-	private ProjectEntity getProject1() {
+	public ProjectEntity getNewProject(int discrimintor) {
 		ProjectEntity projectEntityAhp = new ProjectEntity();
-		projectEntityAhp.setName("projekt1");
+		projectEntityAhp.setName("projekt" + discrimintor);
 		projectEntityAhp.setAlgorithmType(AlgorithmType.AHP);
 		return projectEntityAhp;
 	}
 
-	private GoalAhp getGoal1() {
+	public GoalAhp getNewGoal(int discriminator) {
 		GoalAhp goalAhp = new GoalAhp();
-		goalAhp.setName("goal1");
+		goalAhp.setName("goal" + discriminator);
 		return goalAhp;
 	}
 
