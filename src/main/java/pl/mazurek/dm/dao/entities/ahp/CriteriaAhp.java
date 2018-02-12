@@ -2,6 +2,7 @@ package pl.mazurek.dm.dao.entities.ahp;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -15,7 +16,7 @@ public class CriteriaAhp extends AbstractDacisionMakingEntity implements Criteri
 	@ManyToOne
 	private GoalAhp goalAhp;
 
-	@OneToMany(mappedBy = "parent")
+	@OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
 	private List<CriteriaRating> criteriaRatings;
 	
 	public GoalAhp getGoalAhp() {

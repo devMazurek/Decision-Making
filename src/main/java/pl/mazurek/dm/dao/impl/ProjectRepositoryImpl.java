@@ -17,12 +17,12 @@ import pl.mazurek.dm.dao.entities.common.ProjectEntity;
 @Repository
 public class ProjectRepositoryImpl extends SimpleJpaRepository<ProjectEntity, Long> implements ProjectRepository {
 
-	@PersistenceContext
-	private EntityManager entityManager;
+	EntityManager entityManager;
 	
 	public ProjectRepositoryImpl(Class<ProjectEntity> domainClass, EntityManager em) {
 		
 		super(domainClass, em);
+		
 		this.entityManager = em;
 		// TODO Auto-generated constructor stub
 	}

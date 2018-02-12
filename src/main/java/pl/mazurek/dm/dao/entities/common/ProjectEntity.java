@@ -6,8 +6,11 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+
+import org.springframework.transaction.annotation.Transactional;
 
 import pl.mazurek.dm.common.AlgorithmType;
 import pl.mazurek.dm.dao.entities.AbstractDacisionMakingEntity;
@@ -16,6 +19,7 @@ import pl.mazurek.dm.dao.entities.ahp.GoalAhp;
 @Entity
 public class ProjectEntity extends AbstractDacisionMakingEntity {
 
+	
 	@ManyToOne
 	private UserEntity userEntity;
 	

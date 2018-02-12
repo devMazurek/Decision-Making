@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
+import pl.mazurek.dm.dao.entities.ahp.GoalAhp;
 import pl.mazurek.dm.dao.entities.common.ProjectEntity;
 import pl.mazurek.dm.dao.entities.common.UserEntity;
 
@@ -20,4 +21,10 @@ public class ConfigurationApp {
 	public Class<UserEntity> userEntityClass() {
 		return UserEntity.class;
 	}
+	
+	@Bean
+	public Class<GoalAhp> goalEntityClass() {
+		return GoalAhp.class;
+	}
+	
 }

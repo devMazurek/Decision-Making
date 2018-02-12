@@ -1,8 +1,7 @@
 package pl.mazurek.dm.dao;
 
-import javax.transaction.Transactional;
-
 import org.assertj.core.api.Assertions;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -11,8 +10,12 @@ import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import pl.mazurek.dm.DecisionMakingApp;
+import pl.mazurek.dm.dao.ahpdao.GoalRepository;
+import pl.mazurek.dm.dao.entities.ahp.GoalAhp;
 import pl.mazurek.dm.dao.entities.common.ProjectEntity;
 import pl.mazurek.dm.dao.entities.common.UserEntity;
 import pl.mazurek.dm.dao.util.DataBaseUtil;
@@ -29,28 +32,15 @@ public class CascadeTest {
 	private ProjectRepository projectRepository;
 	
 	@Autowired
+	private GoalRepository goalRepository;
+	
+	@Autowired
 	private DataBaseUtil dataBaseUtil;
 	
 	@Before
 	public void setUp() {
 
 		dataBaseUtil.createSampleData();
-	}
-	
-	@Transactional
-	@Test
-	public void shoulAddProjectByUser(){
-		
-		UserEntity userEntity = userRepository.findAll().stream().findFirst().get();
-		
-		long countProjectsBefore = projectRepository.count();
-		
-		userEntity.getProjectEntities().add(dataBaseUtil.getNewProject(2));
-		userRepository.saveAndFlush(userEntity);
-		
-		long countProjectsAfter = projectRepository.count();
-		
-		Assertions.assertThat(countProjectsAfter).isGreaterThan(countProjectsBefore);
 	}
 	
 	@Transactional
@@ -71,10 +61,10 @@ public class CascadeTest {
 	
 	@Transactional
 	@Test
-	public void shoulDeleteChildrenProjects(){
+	public void shouldDeleteChildrenProjects(){
 		
 		UserEntity userEntity = userRepository.findAll().stream().findFirst().get();
-		
+		System.out.println(userEntity.getProjectEntities().size());
 		long countProjectsBefore = projectRepository.count();
 		
 		userRepository.delete(userEntity);
@@ -82,5 +72,35 @@ public class CascadeTest {
 		long countProjectsAfter = projectRepository.count();
 		
 		Assertions.assertThat(countProjectsAfter).isLessThan(countProjectsBefore);
+	}
+	
+	@Transactional
+	@Test
+	public void shouldDeleteGoalByProject() {
+		
+		ProjectEntity projectEntity = projectRepository.findAll().stream().findFirst().get();
+		
+		long countBefore = goalRepository.count();
+
+		projectRepository.delete(projectEntity);
+		
+		long countAfter = goalRepository.count();
+
+		Assertions.assertThat(countAfter).isLessThan(countBefore);
+	}
+	
+	@Transactional
+	@Test
+	public void shouldUpdateGoalByProject(){
+		
+		final String newName = "new name";
+		ProjectEntity projectEntity = projectRepository.findAll().stream().findFirst().get();
+		
+		projectEntity.getGoalAhp().setName(newName);
+		projectRepository.saveAndFlush(projectEntity);
+		
+		GoalAhp goalAhpEntityAfterChange = goalRepository.findAll().stream().findFirst().get();
+		
+		Assertions.assertThat(goalAhpEntityAfterChange.getName()).isEqualTo(newName);
 	}
 }

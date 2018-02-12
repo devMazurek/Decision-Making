@@ -1,9 +1,7 @@
 package pl.mazurek.dm.dao;
 
-import javax.transaction.Transactional;
-import javax.transaction.Transactional.TxType;
-
 import org.assertj.core.api.Assertions;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -12,15 +10,19 @@ import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import pl.mazurek.dm.DecisionMakingApp;
 import pl.mazurek.dm.dao.entities.common.UserEntity;
 import pl.mazurek.dm.dao.util.DataBaseUtil;
 
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = { DecisionMakingApp.class })
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class UserRepositoryTest {
+	
 	@Autowired
 	private DataBaseUtil dataBaseUtil;
 
@@ -48,14 +50,14 @@ public class UserRepositoryTest {
 	@Test
 	public void shouldAddUserSuccessfull() {
 
-		UserEntity userEntity = getNewUser(2);
+		UserEntity userEntity = dataBaseUtil.getNewUser(2);
 
 		UserEntity savedUserEntity = userRepository.saveAndFlush(userEntity);
 
 		long sizeOfUsers = userRepository.count();
 
 		Assertions.assertThat(sizeOfUsers).isEqualTo(NUMBER_OF_USERS + 1);
-		Assertions.assertThat(savedUserEntity.getLogin()).containsIgnoringCase("user");
+		Assertions.assertThat(savedUserEntity.getLogin()).containsIgnoringCase("login2");
 	}
 
 	@Transactional
@@ -74,7 +76,7 @@ public class UserRepositoryTest {
 		Assertions.assertThat(savedUserEntity.getLogin()).containsIgnoringCase("nowy");
 	}
 
-	@Transactional(value = TxType.SUPPORTS)
+	@Transactional
 	@Test
 	public void shouldDeleteUserSuccessfull() {
 
@@ -87,13 +89,5 @@ public class UserRepositoryTest {
 
 		Assertions.assertThat(stillExist).isEqualTo(false);
 		Assertions.assertThat(sizeOfUsers).isEqualTo(NUMBER_OF_USERS - 1);
-	}
-
-	private UserEntity getNewUser(int numberOfUser) {
-
-		UserEntity userEntity = new UserEntity();
-		userEntity.setLogin("User" + numberOfUser);
-
-		return userEntity;
 	}
 }

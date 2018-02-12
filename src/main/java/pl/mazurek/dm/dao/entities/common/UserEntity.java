@@ -33,7 +33,7 @@ public class UserEntity implements BussinesEntity {
 	@Enumerated(EnumType.STRING)
 	private Role role;
 	
-	@OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "userEntity", cascade = {CascadeType.REMOVE}, orphanRemoval = true)
 	private List<ProjectEntity> projectEntities;
 
 	public Long getId() {
