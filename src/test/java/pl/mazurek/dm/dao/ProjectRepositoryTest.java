@@ -41,7 +41,6 @@ public class ProjectRepositoryTest {
 	public void setUp() {
 
 		dataBaseUtil.createSampleData();
-		
 	}
 	
 

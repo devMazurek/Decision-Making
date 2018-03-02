@@ -12,14 +12,13 @@ import pl.mazurek.dm.dao.entities.ahp.GoalAhp;
 
 public class GoalRepositoryImpl extends SimpleJpaRepository<GoalAhp, Long> implements GoalRepository {
 
-	@PersistenceContext
 	private EntityManager entityManager;
 	
 	public GoalRepositoryImpl(Class<GoalAhp> domainClass, EntityManager em) {
 		
 		super(domainClass, em);
 		
-		this.entityManager = entityManager;
+		this.entityManager = em;
 		
 	}
 

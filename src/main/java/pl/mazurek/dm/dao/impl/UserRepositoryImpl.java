@@ -19,7 +19,6 @@ import pl.mazurek.dm.dao.entities.common.UserEntity;
 @Repository
 public class UserRepositoryImpl extends SimpleJpaRepository<UserEntity, Long> implements UserRepository{
 
-	@PersistenceContext
 	private EntityManager entityManager;
 	
 	public UserRepositoryImpl(Class<UserEntity> domainClass, EntityManager em) {
@@ -29,6 +28,7 @@ public class UserRepositoryImpl extends SimpleJpaRepository<UserEntity, Long> im
 	}
 
 	public UserEntity getUserByLogin(String login) {
+		
 		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<UserEntity>  criteriaQuery = criteriaBuilder.createQuery(UserEntity.class);
 		

@@ -20,9 +20,12 @@ public class GoalAhp extends AbstractDacisionMakingEntity implements GoalEntity{
 	@OneToOne
 	private ProjectEntity projectEntity;
 	
-	@OneToMany(mappedBy = "goalAhp", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "goalAhp", cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private List<CriteriaAhp> criteriaAhps;
 
+	@OneToMany(mappedBy = "goalAhp", cascade = CascadeType.REMOVE, orphanRemoval = true)
+	private List<AlternativAhp> alternativAhps;
+	
 	public ProjectEntity getProjectEntity() {
 		return projectEntity;
 	}
@@ -37,5 +40,13 @@ public class GoalAhp extends AbstractDacisionMakingEntity implements GoalEntity{
 
 	public void setCriteriaAhps(List<CriteriaAhp> criteriaAhps) {
 		this.criteriaAhps = criteriaAhps;
+	}
+
+	public List<AlternativAhp> getAlternativAhps() {
+		return alternativAhps;
+	}
+
+	public void setAlternativAhps(List<AlternativAhp> alternativAhps) {
+		this.alternativAhps = alternativAhps;
 	}
 }

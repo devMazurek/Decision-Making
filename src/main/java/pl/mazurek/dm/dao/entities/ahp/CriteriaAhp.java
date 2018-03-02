@@ -16,8 +16,11 @@ public class CriteriaAhp extends AbstractDacisionMakingEntity implements Criteri
 	@ManyToOne
 	private GoalAhp goalAhp;
 
-	@OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "parent", cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private List<CriteriaRating> criteriaRatings;
+	
+	@OneToMany(mappedBy = "criteriaAhp", cascade = CascadeType.REMOVE, orphanRemoval = true)
+	private List<AlternativAhp> alternativeAhp;
 	
 	public GoalAhp getGoalAhp() {
 		return goalAhp;
@@ -25,5 +28,21 @@ public class CriteriaAhp extends AbstractDacisionMakingEntity implements Criteri
 
 	public void setGoalAhp(GoalAhp goalAhp) {
 		this.goalAhp = goalAhp;
+	}
+
+	public List<CriteriaRating> getCriteriaRatings() {
+		return criteriaRatings;
+	}
+
+	public void setCriteriaRatings(List<CriteriaRating> criteriaRatings) {
+		this.criteriaRatings = criteriaRatings;
+	}
+
+	public List<AlternativAhp> getAlternativeAhp() {
+		return alternativeAhp;
+	}
+
+	public void setAlternativeAhp(List<AlternativAhp> alternativeAhp) {
+		this.alternativeAhp = alternativeAhp;
 	}
 }

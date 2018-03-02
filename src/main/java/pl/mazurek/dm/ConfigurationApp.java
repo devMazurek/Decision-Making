@@ -4,6 +4,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
+import pl.mazurek.dm.dao.entities.ahp.AlternativAhp;
+import pl.mazurek.dm.dao.entities.ahp.AlternativRating;
+import pl.mazurek.dm.dao.entities.ahp.CriteriaAhp;
+import pl.mazurek.dm.dao.entities.ahp.CriteriaRating;
 import pl.mazurek.dm.dao.entities.ahp.GoalAhp;
 import pl.mazurek.dm.dao.entities.common.ProjectEntity;
 import pl.mazurek.dm.dao.entities.common.UserEntity;
@@ -27,4 +31,18 @@ public class ConfigurationApp {
 		return GoalAhp.class;
 	}
 	
+	@Bean
+	public Class<CriteriaRating> criteriaRatingEntityClass() {
+		return CriteriaRating.class;
+	}
+	
+	@Bean
+	public Class<AlternativAhp> alternativEntityClass() {
+		return AlternativAhp.class;
+	}
+	
+	@Bean
+	public Class<AlternativRating> alternativRatingEntityClass() {
+		return AlternativRating.class;
+	}
 }

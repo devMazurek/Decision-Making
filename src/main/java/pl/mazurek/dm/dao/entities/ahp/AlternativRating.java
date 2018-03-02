@@ -1,5 +1,6 @@
 package pl.mazurek.dm.dao.entities.ahp;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
@@ -11,7 +12,7 @@ public class AlternativRating extends AbstractRatingEntity {
 	@ManyToOne
 	private AlternativAhp parent;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.REMOVE)
 	private AlternativAhp comparable;
 	
 	@ManyToOne

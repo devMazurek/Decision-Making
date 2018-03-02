@@ -27,7 +27,7 @@ public class ProjectEntity extends AbstractDacisionMakingEntity {
 	@Enumerated(EnumType.STRING)
 	private AlgorithmType algorithmType;
 
-	@OneToOne(mappedBy = "projectEntity", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "projectEntity", cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private GoalAhp goalAhp;
 	
 	public UserEntity getUserEntity() {
