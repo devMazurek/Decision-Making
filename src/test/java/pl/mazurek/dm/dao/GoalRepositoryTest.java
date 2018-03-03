@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,8 +38,9 @@ public class GoalRepositoryTest {
 	
 
 	@Transactional
+	@Rollback(false)
 	@Test
-	public void shouldGetAllProjects() {
+	public void shouldGetAllGoals() {
 
 		long sizeOfGoals = goalAhpRepository.count();
 
@@ -47,7 +49,7 @@ public class GoalRepositoryTest {
 
 	@Transactional
 	@Test
-	public void shouldAddProjectSuccessfull() {
+	public void shouldAddGoalSuccessfull() {
 
 		GoalAhp goalEntiy = dataBaseUtil.getNewGoal(2);
 
@@ -61,7 +63,7 @@ public class GoalRepositoryTest {
 
 	@Transactional
 	@Test
-	public void shouldUpdateProjectSuccessfull() {
+	public void shouldUpdateGoalSuccessfull() {
 
 		GoalAhp goalEntiy = goalAhpRepository.findAll().stream().findFirst().get();
 
@@ -77,7 +79,7 @@ public class GoalRepositoryTest {
 
 	@Transactional
 	@Test
-	public void shouldDeleteProjectSuccessfull() {
+	public void shouldDeleteGoalSuccessfull() {
 
 		GoalAhp goalEntiy = goalAhpRepository.findAll().stream().findFirst().get();
 		

@@ -12,7 +12,7 @@ public class AlternativRating extends AbstractRatingEntity {
 	@ManyToOne
 	private AlternativAhp parent;
 	
-	@ManyToOne(cascade = CascadeType.REMOVE)
+	@ManyToOne
 	private AlternativAhp comparable;
 	
 	@ManyToOne

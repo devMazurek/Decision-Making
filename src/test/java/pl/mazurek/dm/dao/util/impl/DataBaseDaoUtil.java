@@ -63,6 +63,9 @@ public class DataBaseDaoUtil implements DataBaseUtil {
 		
 		AlternativAhp alternativAhp2 = getAlternativAhp(2);
 		alternativRating.setComarable(alternativAhp2);
+		List<AlternativRating> alternativRatingsListOfComparable = new ArrayList<AlternativRating>();
+		alternativRatingsListOfComparable.add(alternativRating);
+		alternativAhp2.setAlternativRatingsComparable(alternativRatingsListOfComparable);
 		
 		CriteriaRating criteriaRating = getCriteriaRaing(1d);
 		
@@ -71,10 +74,16 @@ public class DataBaseDaoUtil implements DataBaseUtil {
 		criteriaRatings.add(criteriaRating);
 		criteriaAhp.setCriteriaRatings(criteriaRatings);
 		criteriaRating.setParent(criteriaAhp);
+		List<AlternativRating> alternativRatingsList = new ArrayList<AlternativRating>();
+		alternativRatingsList.add(alternativRating);
+		criteriaAhp.setAlternativRatings(alternativRatingsList);
 		alternativRating.setCriteriaAhp(criteriaAhp);
 		
 		CriteriaAhp criteriaAhp2 = getCriteriaAhp(2);
 		criteriaRating.setComparable(criteriaAhp2);
+		List<CriteriaRating> criteriaRatingList = new ArrayList<CriteriaRating>();
+		criteriaRatingList.add(criteriaRating);
+		criteriaAhp2.setCriteriaRatingsComparable(criteriaRatingList);
 		
 		GoalAhp goalAhp = getNewGoal(1);
 		criteriaAhp.setGoalAhp(goalAhp);
@@ -98,6 +107,7 @@ public class DataBaseDaoUtil implements DataBaseUtil {
 		List<ProjectEntity> projectEntities = new ArrayList<ProjectEntity>();
 		projectEntities.add(projectEntityAhp);
 		userEntityAdmin.setProjectEntities(projectEntities);
+		projectEntityAhp.setUserEntity(userEntityAdmin);
 		
 		userRepository.save(userEntityAdmin);
 		projectRepository.save(projectEntityAhp);

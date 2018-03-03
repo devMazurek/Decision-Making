@@ -19,8 +19,8 @@ public class AlternativAhp extends AbstractDacisionMakingEntity implements Alter
 	@OneToMany(mappedBy = "parent", cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private List<AlternativRating> alternativRatings;
 	
-	@ManyToOne
-	private CriteriaAhp criteriaAhp;
+	@OneToMany(mappedBy = "comparable", cascade = CascadeType.REMOVE, orphanRemoval = true)
+	private List<AlternativRating> alternativRatingsComparable;
 
 	public GoalAhp getGoalAhp() {
 		return goalAhp;
@@ -36,5 +36,13 @@ public class AlternativAhp extends AbstractDacisionMakingEntity implements Alter
 
 	public void setAlternativRatings(List<AlternativRating> alternativRatings) {
 		this.alternativRatings = alternativRatings;
+	}
+
+	public List<AlternativRating> getAlternativRatingsComparable() {
+		return alternativRatingsComparable;
+	}
+
+	public void setAlternativRatingsComparable(List<AlternativRating> alternativRatingsComparable) {
+		this.alternativRatingsComparable = alternativRatingsComparable;
 	}
 }

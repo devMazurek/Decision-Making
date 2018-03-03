@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +21,7 @@ import pl.mazurek.dm.dao.ahpdao.CriteriaRatingRepository;
 import pl.mazurek.dm.dao.ahpdao.CriteriaRepository;
 import pl.mazurek.dm.dao.ahpdao.GoalRepository;
 import pl.mazurek.dm.dao.entities.ahp.CriteriaAhp;
+import pl.mazurek.dm.dao.entities.ahp.CriteriaRating;
 import pl.mazurek.dm.dao.entities.ahp.GoalAhp;
 import pl.mazurek.dm.dao.entities.common.ProjectEntity;
 import pl.mazurek.dm.dao.entities.common.UserEntity;
@@ -152,5 +154,36 @@ public class CascadeTest {
 		Assertions.assertThat(criteriaEntityAfterChange).isNotNull();
 	}
 	
+	@Transactional
+	@Test
+	public void shouldDeleteCriteriaRatingByCritetriaParent() {
+		
+		CriteriaAhp criteriaEntity = criteriaRepository.findAll().stream().findFirst().get();
+		
+		long countBefore = criteriaRatingRepository.count();
+
+		criteriaRepository.delete(criteriaEntity);
+		
+		long countAfter = criteriaRatingRepository.count();
+
+		Assertions.assertThat(countAfter).isLessThan(countBefore);
+	}
 	
+	@Transactional
+	@Test
+	public void shouldDeleteCriteriaRatingByCritetriaComparable() {
+		
+		long idOfComparable = criteriaRatingRepository.findAll().stream().filter(comp -> comp.getParent() != null)
+				.map(m -> m.getComparable()).findFirst().get().getId();
+		
+		CriteriaAhp criteriaEntity = criteriaRepository.findOne(idOfComparable);
+		System.out.println(idOfComparable);
+		long countBefore = criteriaRatingRepository.count();
+
+		criteriaRepository.delete(criteriaEntity);
+		
+		long countAfter = criteriaRatingRepository.count();
+
+		Assertions.assertThat(countAfter).isLessThan(countBefore);
+	}
 }

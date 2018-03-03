@@ -12,7 +12,7 @@ public class CriteriaRating extends AbstractRatingEntity {
 	@ManyToOne
 	private CriteriaAhp parent;
 	
-	@ManyToOne(cascade = CascadeType.REMOVE)
+	@ManyToOne
 	private CriteriaAhp comparable;
 
 	public CriteriaAhp getParent() {
