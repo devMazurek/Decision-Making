@@ -1,6 +1,5 @@
 package pl.mazurek.dm.dao.entities.ahp;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 

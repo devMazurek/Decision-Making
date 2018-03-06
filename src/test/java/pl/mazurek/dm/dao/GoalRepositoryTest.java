@@ -8,7 +8,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,15 +29,16 @@ public class GoalRepositoryTest {
 
 	private final static int NUMBER_OF_GOALS = 1;
 
-	@Before
-	public void setUp() {
+//	@Before
+//	public void setUp() {
+//
+//		dataBaseUtil.createSampleData();
+//	}
+//	
 
-		dataBaseUtil.createSampleData();
-	}
 	
-
+	
 	@Transactional
-	@Rollback(false)
 	@Test
 	public void shouldGetAllGoals() {
 

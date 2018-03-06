@@ -1,11 +1,6 @@
 package pl.mazurek.dm.dao;
 
-import javax.persistence.EntityManager;
-import javax.persistence.FlushModeType;
-import javax.transaction.TransactionManager;
-
 import org.assertj.core.api.Assertions;
-import org.hibernate.SessionFactory;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -13,12 +8,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationContext;
-import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import pl.mazurek.dm.DecisionMakingApp;
 import pl.mazurek.dm.dao.entities.common.ProjectEntity;

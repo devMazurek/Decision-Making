@@ -1,7 +1,6 @@
 package pl.mazurek.dm.dao;
 
 import org.assertj.core.api.Assertions;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -9,9 +8,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import pl.mazurek.dm.DecisionMakingApp;
@@ -21,7 +18,6 @@ import pl.mazurek.dm.dao.ahpdao.CriteriaRatingRepository;
 import pl.mazurek.dm.dao.ahpdao.CriteriaRepository;
 import pl.mazurek.dm.dao.ahpdao.GoalRepository;
 import pl.mazurek.dm.dao.entities.ahp.CriteriaAhp;
-import pl.mazurek.dm.dao.entities.ahp.CriteriaRating;
 import pl.mazurek.dm.dao.entities.ahp.GoalAhp;
 import pl.mazurek.dm.dao.entities.common.ProjectEntity;
 import pl.mazurek.dm.dao.entities.common.UserEntity;
@@ -59,7 +55,7 @@ public class CascadeTest {
 	@Before
 	public void setUp() {
 
-		dataBaseUtil.createSampleData();
+		//dataBaseUtil.createSampleData();
 	}
 	
 	@Transactional
@@ -185,5 +181,14 @@ public class CascadeTest {
 		long countAfter = criteriaRatingRepository.count();
 
 		Assertions.assertThat(countAfter).isLessThan(countBefore);
+	}
+	
+	@Transactional
+	@Test
+	public void shouldAddDefaultGoalByPostPersistProject() {
+		
+		projectRepository.save(dataBaseUtil.getNewProject(1));
+		
+		Assertions.assertThat(goalRepository.findAll()).isNotEmpty();
 	}
 }

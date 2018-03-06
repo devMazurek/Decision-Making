@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Configuration;
 
 import pl.mazurek.dm.dao.entities.ahp.AlternativAhp;
 import pl.mazurek.dm.dao.entities.ahp.AlternativRating;
-import pl.mazurek.dm.dao.entities.ahp.CriteriaAhp;
 import pl.mazurek.dm.dao.entities.ahp.CriteriaRating;
 import pl.mazurek.dm.dao.entities.ahp.GoalAhp;
 import pl.mazurek.dm.dao.entities.common.ProjectEntity;
